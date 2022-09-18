@@ -34,11 +34,26 @@ stayOn = True
 #the clock is used to control how fast the screen updates
 clock = pygame.time.Clock()
 
-#main
+#main loop
 while stayOn:
     for event in pygame.event.get(): #user has done something
         if event.type == pygame.QUIT: #if user has closed the window
             stayOn = False # exits the loop
+        elif event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_x:
+                stayOn = False
+    
+    #moving the paddles
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        paddle_a.moveUp(5)
+    if keys[pygame.K_s]:
+        paddle_a.moveDown(5)
+    if keys[pygame.K_UP]:
+        paddle_b.moveUp(5)
+    if keys[pygame.K_DOWN]:
+        paddle_b.moveDown(5)
+
 
     # game logic
     sprites_list.update()
