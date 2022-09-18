@@ -1,4 +1,5 @@
-import  pygame
+import pygame
+from paddle import Paddle
 pygame.init()
 
 black = (0,0,0)
@@ -8,6 +9,24 @@ white = (255,255,255)
 size = (700, 500)
 screen =  pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
+
+#left side paddle
+paddle_a = Paddle(white, 10, 100)
+paddle_a.rect.x = 20
+paddle_a.rect.y = 200
+
+#right side paddle
+paddle_b = Paddle(white, 10, 100)
+paddle_a.rect.x = 670
+paddle_b.rect.y = 200
+
+#list of all sprites used in this project
+sprites_list = pygame.sprite.Group()
+
+#add the paddles to sprites_list
+sprites_list.add(paddle_a)
+sprites_list.add(paddle_b)
+
 
 #stays on until player exits the game
 stayOn = True
@@ -19,9 +38,10 @@ clock = pygame.time.Clock()
 while stayOn:
     for event in pygame.event.get(): #user has done something
         if event.type == pygame.QUIT: #if user has closed the window
-            stayOn = false # exits the loop
+            stayOn = False # exits the loop
 
     # game logic
+    sprites_list.update()
 
     #drawing
     #draw the screen black
@@ -29,6 +49,9 @@ while stayOn:
 
     #draw the net
     pygame.draw.line(screen, white, [349, 0], [349, 500], 5)
+
+    #draw the sprites 
+    sprites_list.draw(screen)
 
     # update screen with what is drawn
     pygame.display.flip()
