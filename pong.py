@@ -19,7 +19,7 @@ paddle_a.rect.y = 200
 
 #right side paddle
 paddle_b = Paddle(white, 10, 100)
-paddle_a.rect.x = 670
+paddle_a.rect.x = 690
 paddle_b.rect.y = 200
 
 #ball
@@ -45,6 +45,9 @@ clock = pygame.time.Clock()
 #players score
 scoreA = 0
 scoreB = 0
+
+player1 = "Player 1"
+player2 = "Player 2"
 
 #main loop
 while stayOn:
@@ -90,17 +93,24 @@ while stayOn:
     screen.fill(black)
 
     #draw the net
-    pygame.draw.line(screen, white, [349, 0], [349, 500], 5)
+    pygame.draw.line(screen, white, [350, 0], [350, 500], 5)
 
     #draw the sprites 
     sprites_list.draw(screen)
+    
+    #display names
+    font = pygame.font.Font(None, 30)
+    text = font.render(player1, 1, white)
+    screen.blit(text, (225, 10))
+    text = font.render(player2, 1, white)
+    screen.blit(text, (400, 10))
 
     #display scores
     font = pygame.font.Font(None, 74)
     text = font.render(str(scoreA), 1, white)
-    screen.blit(text, (250,10))
+    screen.blit(text, (250,35))
     text = font.render(str(scoreB), 1, white)
-    screen.blit(text, (420,10))
+    screen.blit(text, (420,35))
 
     # update screen with what is drawn
     pygame.display.flip()
