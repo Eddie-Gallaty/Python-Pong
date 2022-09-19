@@ -42,6 +42,10 @@ stayOn = True
 #the clock is used to control how fast the screen updates
 clock = pygame.time.Clock()
 
+#players score
+scoreA = 0
+scoreB = 0
+
 #main loop
 while stayOn:
     for event in pygame.event.get(): #user has done something
@@ -68,14 +72,19 @@ while stayOn:
 
     #check if ball is bouncing
     if ball.rect.x >= 690:
+        scoreA += 1
         ball.velocity[0] = - ball.velocity[0]
     if ball.rect.x <= 0:
+        scoreB += 1
         ball.velocity[0] = - ball.velocity[0]
     if ball.rect.y > 490:
         ball.velocity[1] = - ball.velocity[1]
     if ball.rect.y < 0:
         ball.velocity[1] = - ball.velocity[1]
-
+    
+    #detect if ball is bouncing off paddle a or b
+    if pygame.sprite.collide_mask(ball, paddle_a) or pygame.sprite.collide_mask(ball, paddle_b):
+        ball.bounce()
     #drawing
     #draw the screen black
     screen.fill(black)
@@ -85,6 +94,13 @@ while stayOn:
 
     #draw the sprites 
     sprites_list.draw(screen)
+
+    #display scores
+    font = pygame.font.Font(None, 74)
+    text = font.render(str(scoreA), 1, white)
+    screen.blit(text, (250,10))
+    text = font.render(str(scoreB), 1, white)
+    screen.blit(text, (420,10))
 
     # update screen with what is drawn
     pygame.display.flip()
