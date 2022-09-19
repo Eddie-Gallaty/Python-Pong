@@ -1,5 +1,7 @@
 import pygame
 from paddle import Paddle
+from ball import Ball
+
 pygame.init()
 
 black = (0,0,0)
@@ -20,12 +22,18 @@ paddle_b = Paddle(white, 10, 100)
 paddle_a.rect.x = 670
 paddle_b.rect.y = 200
 
+#ball
+ball = Ball(white, 10, 10)
+ball.rect.x = 345
+ball.rect.y = 195
+
 #list of all sprites used in this project
 sprites_list = pygame.sprite.Group()
 
 #add the paddles to sprites_list
 sprites_list.add(paddle_a)
 sprites_list.add(paddle_b)
+sprites_list.add(ball)
 
 
 #stays on until player exits the game
@@ -57,6 +65,16 @@ while stayOn:
 
     # game logic
     sprites_list.update()
+
+    #check if ball is bouncing
+    if ball.rect.x >= 690:
+        ball.velocity[0] = - ball.velocity[0]
+    if ball.rect.x <= 0:
+        ball.velocity[0] = - ball.velocity[0]
+    if ball.rect.y > 490:
+        ball.velocity[1] = - ball.velocity[1]
+    if ball.rect.y < 0:
+        ball.velocity[1] = - ball.velocity[1]
 
     #drawing
     #draw the screen black
